@@ -1,0 +1,256 @@
+.page-header {
+  position: relative;
+  z-index: 1;
+  padding: 50px 20px 25px;
+  max-width: 1100px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.page-header p {
+  color: #7aaccf;
+  font-size: 0.9rem;
+  line-height: 1.7;
+  max-width: 100%;
+  margin-top: 10px;
+}
+
+.stats-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 16px 20px;
+  max-width: 90%;
+  margin: 0 auto 30px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(0,191,255,0.15);
+  border-radius: 14px;
+  position: relative;
+  z-index: 1;
+  flex-wrap: wrap;
+}
+
+.stat-item { text-align: center; }
+
+.stat-n {
+  display: block;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: #00bfff;
+}
+
+.stat-l {
+  font-size: 0.7rem;
+  color: #7aaccf;
+}
+
+.stat-divider {
+  width: 1px;
+  height: 30px;
+  background: rgba(0,191,255,0.15);
+}
+
+.map-section {
+  position: relative;
+  z-index: 1;
+  padding: 0 16px;
+  max-width: 1100px;
+  margin: 0 auto 40px;
+}
+
+.map-wrapper {
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(0,191,255,0.15);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+
+#map {
+  height: 400px;
+  width: 100%;
+  z-index: 1;
+}
+
+.map-info-panel {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  left: 16px;
+  width: auto;
+  background: rgba(3,17,43,0.95);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(0,191,255,0.15);
+  border-radius: 14px;
+  padding: 16px;
+  z-index: 1000;
+  transform: translateY(20px);
+  opacity: 0;
+  transition: all 0.4s ease;
+  pointer-events: none;
+}
+
+.map-info-panel.active {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: all;
+}
+
+.info-panel-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(0,191,255,0.15);
+}
+
+.info-icon { font-size: 1.6rem; flex-shrink: 0; }
+
+.info-name {
+  font-size: 0.85rem;
+  font-weight: 700;
+  line-height: 1.4;
+  margin-bottom: 3px;
+}
+
+.info-city {
+  font-size: 0.75rem;
+  color: #00bfff;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.info-label { color: #7aaccf; font-size: 0.75rem; }
+
+.info-val   { color: #eef6ff; font-size: 0.78rem; font-weight: 600; }
+
+.info-desc {
+  color: #7aaccf;
+  font-size: 0.78rem;
+  line-height: 1.6;
+  margin-top: 10px;
+}
+
+.stations-section {
+  position: relative;
+  z-index: 1;
+  padding: 0 16px 60px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.stations-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.station-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(0,191,255,0.15);
+  border-radius: 14px;
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.station-card:hover {
+  border-color: rgba(0,191,255,0.35);
+  transform: translateY(-2px);
+}
+
+.station-dot {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+.station-name {
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: 3px;
+  line-height: 1.4;
+}
+
+.station-city {
+  font-size: 0.73rem;
+  color: #00bfff;
+  margin-bottom: 8px;
+}
+
+.station-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.station-tag {
+  background: rgba(0,191,255,0.08);
+  border: 1px solid rgba(0,191,255,0.2);
+  color: #00bfff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 50px;
+}
+
+.station-cap {
+  color: #7aaccf;
+  font-size: 0.7rem;
+}
+
+.leaflet-container { background: #03112b !important; }
+
+.leaflet-control-zoom a {
+  background: rgba(3,17,43,0.9) !important;
+  color: #00bfff !important;
+  border-color: rgba(0,191,255,0.15) !important;
+}
+
+.leaflet-control-attribution {
+  background: rgba(3,17,43,0.7) !important;
+  color: #7aaccf !important;
+}
+
+@media (min-width: 600px) {
+  .stations-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .stats-bar {
+    gap: 30px;
+    max-width: 700px;
+  }
+  
+  .stat-n {
+    font-size: 1.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  #map {
+    height: 520px;
+  }
+  
+  .map-info-panel {
+    top: 20px;
+    bottom: auto;
+    right: 20px;
+    left: auto;
+    width: 300px;
+  }
+}

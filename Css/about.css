@@ -1,0 +1,205 @@
+.about-hero {
+  position: relative;
+  z-index: 1;
+  padding: 50px 20px 20px;
+  max-width: 1100px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.about-hero p {
+  color: #7aaccf;
+  font-size: 0.9rem;
+  line-height: 1.7;
+  margin-top: 10px;
+}
+
+.project-card {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: flex-start;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(0,191,255,0.15);
+  border-radius: 20px;
+  padding: 28px;
+  transition: border-color 0.3s;
+}
+
+.project-card:hover { border-color: rgba(0,191,255,0.3); }
+
+.project-icon {
+  font-size: 3rem;
+  flex-shrink: 0;
+  width: 70px; height: 70px;
+  background: linear-gradient(135deg, rgba(10,92,158,0.3), rgba(0,191,255,0.1));
+  border: 1px solid rgba(0,191,255,0.15);
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.project-info p {
+  color: #7aaccf;
+  font-size: 0.9rem;
+  line-height: 1.7;
+  margin-bottom: 14px;
+}
+
+.project-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+
+.ptag {
+  background: rgba(0,191,255,0.08);
+  border: 1px solid rgba(0,191,255,0.2);
+  color: #00bfff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 50px;
+}
+
+.member-card {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  text-align: center;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(0,191,255,0.15);
+  border-radius: 20px;
+  padding: 28px;
+  transition: border-color 0.3s;
+}
+
+.member-card:hover { border-color: rgba(0,191,255,0.3); }
+
+.member-avatar {
+  width: 70px; height: 70px;
+  background: linear-gradient(135deg, #0a5c9e, #00a0d6);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: white;
+  flex-shrink: 0;
+}
+
+.member-name {
+  font-family: 'Tajawal', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 900;
+  margin-bottom: 4px;
+}
+
+.member-role {
+  color: #00bfff;
+  font-size: 0.85rem;
+  margin-bottom: 12px;
+}
+
+.member-badges { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-bottom: 12px; }
+
+.badge {
+  background: rgba(0,191,255,0.08);
+  border: 1px solid rgba(0,191,255,0.2);
+  color: #00bfff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 50px;
+}
+
+.member-desc {
+  color: #7aaccf;
+  font-size: 0.85rem;
+  line-height: 1.7;
+}
+
+.school-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(0,191,255,0.15);
+  border-radius: 20px;
+  padding: 24px;
+  transition: border-color 0.3s;
+}
+
+.school-card:hover { border-color: rgba(0,191,255,0.3); }
+
+.school-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 0;
+  flex-wrap: wrap;
+}
+
+.school-icon { font-size: 1.8rem; flex-shrink: 0; }
+
+.school-label {
+  color: #7aaccf;
+  font-size: 0.75rem;
+  margin-bottom: 2px;
+}
+
+.school-val {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #eef6ff;
+}
+
+.school-divider {
+  height: 1px;
+  background: rgba(0,191,255,0.15);
+  margin: 8px 0;
+}
+
+.goals-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+.goal-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(0,191,255,0.15);
+  border-radius: 18px;
+  padding: 20px;
+  text-align: center;
+  transition: all 0.3s;
+}
+
+.goal-card:hover {
+  border-color: rgba(0,191,255,0.3);
+  transform: translateY(-3px);
+}
+
+.goal-icon { font-size: 1.8rem; display: block; margin-bottom: 10px; }
+
+.goal-card h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 6px; }
+
+.goal-card p  { color: #7aaccf; font-size: 0.8rem; line-height: 1.6; }
+
+@media (min-width: 600px) {
+  .goals-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .member-card {
+    flex-direction: row;
+    text-align: right;
+    align-items: flex-start;
+  }
+  
+  .project-card {
+    flex-direction: row;
+  }
+}
+
+@media (min-width: 900px) {
+  .goals-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>محلل جودة المياه الذكي</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/water-quiz.css"/>
+    <link rel="stylesheet" href="css/shared.css">
+</head>
+<body>
+<div class="container">
+<nav>
+  <a href="index.html" class="nav-logo">💧 <span>نقاء المياه</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">الرئيسية</a></li>
+    <li><a href="photos.html">الصور</a></li>
+    <li><a href="water-quiz.html" class="active">المحلل</a></li>
+    <li><a href="map.html">الخريطة</a></li>
+    <li><a href="about.html">الفريق</a></li>
+  </ul>
+</nav>
+  <div class="header">
+    <span class="icon">💧</span>
+    <h1>محلل جودة المياه الذكي</h1>
+    <p>أجب على ٤ أسئلة بسيطة وسيحدد نظامنا الذكي<br>نوع الفلتر المناسب لمياهك تماماً</p>
+  </div>
+  <div class="progress-wrap" id="progressWrap">
+    <div class="progress-label">
+      <span id="progressText">السؤال ١ من ٤</span>
+      <span id="progressPct">0%</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+  </div>
+  <div class="quiz-card" id="quizCard">
+    <div class="question-num" id="questionNum">السؤال ١</div>
+    <div class="question-text" id="questionText"></div>
+    <div class="options" id="optionsContainer"></div>
+    <button class="btn-next" id="btnNext" onclick="nextQuestion()">التالي ←</button>
+  </div>
+  <div class="loading-screen" id="loadingScreen">
+    <div class="loader"></div>
+    <p style="font-size:1.2rem; font-weight:700; margin-bottom:8px;">جاري تحليل بياناتك...</p>
+    <p class="loading-text">الذكاء الاصطناعي يعالج إجاباتك</p>
+    <div class="loading-steps">
+      <div class="loading-step" id="step1">تحليل مصدر المياه</div>
+      <div class="loading-step" id="step2">فحص المشاكل المحتملة</div>
+      <div class="loading-step" id="step3">مقارنة أنواع الفلاتر</div>
+      <div class="loading-step" id="step4">إعداد التوصية النهائية</div>
+    </div>
+  </div>
+  <div class="result-screen" id="resultScreen">
+    <div class="quiz-card">
+      <div class="result-header">
+        <span class="result-icon" id="resultIcon"></span>
+        <div class="result-title" id="resultTitle"></div>
+        <div class="result-subtitle" id="resultSubtitle"></div>
+      </div>
+      <span class="urgency" id="urgencyBadge"></span>
+      <div class="result-card">
+        <h3>💡 الفلتر الموصى به</h3>
+        <div class="filter-name" id="filterName"></div>
+        <div class="filter-desc" id="filterDesc"></div>
+        <div class="tags" id="filterTags"></div>
+      </div>
+      <div class="result-card">
+        <h3>📊 تقييم جودة مياهك</h3>
+        <div id="metersContainer"></div>
+      </div>
+      <div class="result-card">
+        <h3>✅ خطوات يجب اتباعها</h3>
+        <div id="stepsContainer" style="color: var(--gray); font-size: 0.95rem; line-height: 2;"></div>
+      </div>
+      <button class="btn-restart" onclick="restart()">🔄 إعادة الاختبار</button>
+    </div>
+  </div>
+</div>
+<script src="js/script.js"></script>
+</body>
+</html>

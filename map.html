@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>فلترة المياه — خريطة محطات التنقية</title>
+  <link rel="stylesheet" href="css/shared.css"/>
+  <link rel="stylesheet" href="css/map.css"/>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">💧 <span>نقاء المياه</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">الرئيسية</a></li>
+    <li><a href="photos.html">الصور</a></li>
+    <li><a href="water-quiz.html">المحلل</a></li>
+    <li><a href="map.html" class="active">الخريطة</a></li>
+    <li><a href="about.html">الفريق</a></li>
+  </ul>
+</nav>
+
+<div class="page-header">
+  <div class="section-label anim-1">🗺️ خريطة تفاعلية</div>
+  <h1 class="page-title anim-2">محطات تنقية المياه <span class="highlight">في مصر</span></h1>
+  <p class="anim-3">اكتشف أشهر محطات معالجة وتنقية المياه في جميع أنحاء جمهورية مصر العربية</p>
+</div>
+
+<div class="stats-bar anim-2">
+  <div class="stat-item">
+    <span class="stat-n">+100</span>
+    <span class="stat-l">محطة تنقية في مصر</span>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat-item">
+    <span class="stat-n">43 م م³</span>
+    <span class="stat-l">طاقة إنتاجية يومية</span>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat-item">
+    <span class="stat-n">105 م</span>
+    <span class="stat-l">نسمة يخدمها الشبكة</span>
+  </div>
+</div>
+
+<div class="map-section">
+  <div class="map-wrapper anim-1">
+    <div id="map"></div>
+    
+    <div class="map-info-panel" id="infoPanel">
+      <div class="info-panel-header">
+        <span class="info-icon" id="infoIcon">🏭</span>
+        <div>
+          <div class="info-name" id="infoName">اختر محطة</div>
+          <div class="info-city" id="infoCity">انقر على أي نقطة على الخريطة</div>
+        </div>
+      </div>
+      <div class="info-body" id="infoBody">
+        <p style="color:var(--gray); font-size:0.9rem;">اضغط على أي محطة لعرض تفاصيلها هنا</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="stations-section">
+  <div style="text-align:center; margin-bottom:40px;" class="anim-1">
+    <div class="section-label" style="justify-content:center;">قائمة المحطات</div>
+    <h2 class="section-title">أبرز محطات التنقية</h2>
+  </div>
+  <div class="stations-grid" id="stationsList"></div>
+</div>
+
+<footer>
+  <p>موقع <span>نقاء المياه</span> — معلومات عن فلترة المياه وأهميتها للصحة</p>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+const stations = [
+  {
+    name: "محطة معالجة مياه القاهرة الكبرى",
+    city: "القاهرة",
+    lat: 30.0444, lng: 31.2357,
+    capacity: "٧ مليون م³/يوم",
+    type: "معالجة متكاملة",
+    desc: "أكبر محطة معالجة مياه في مصر وإفريقيا، تخدم أكثر من ٢٠ مليون نسمة في القاهرة الكبرى.",
+    color: "#00bfff"
+  },
+  {
+    name: "محطة معالجة مياه الإسكندرية",
+    city: "الإسكندرية",
+    lat: 31.2001, lng: 29.9187,
+    capacity: "٤ مليون م³/يوم",
+    type: "ترشيح وتعقيم",
+    desc: "تخدم مدينة الإسكندرية وضواحيها، تعتمد على مياه النيل بعد معالجتها بمراحل متعددة.",
+    color: "#00e5a0"
+  },
+  {
+    name: "محطة معالجة مياه أسوان",
+    city: "أسوان",
+    lat: 24.0889, lng: 32.8998,
+    capacity: "٥٠٠ ألف م³/يوم",
+    type: "ترشيح طبيعي",
+    desc: "تستفيد من مياه بحيرة ناصر، وتُعدّ من أنظف مصادر مياه الشرب في مصر.",
+    color: "#ffb800"
+  },
+  {
+    name: "محطة معالجة مياه الأقصر",
+    city: "الأقصر",
+    lat: 25.6872, lng: 32.6396,
+    capacity: "٢٠٠ ألف م³/يوم",
+    type: "معالجة ثلاثية",
+    desc: "تخدم مدينة الأقصر والمناطق السياحية المحيطة بها على ضفتي النيل.",
+    color: "#ff6b35"
+  },
+  {
+    name: "محطة معالجة مياه بورسعيد",
+    city: "بورسعيد",
+    lat: 31.2653, lng: 32.3019,
+    capacity: "٣٠٠ ألف م³/يوم",
+    type: "تحلية وترشيح",
+    desc: "تجمع بين تقنيات الترشيح التقليدي وتحلية مياه البحر لخدمة مدينة بورسعيد.",
+    color: "#a855f7"
+  },
+  {
+    name: "محطة معالجة مياه المنصورة",
+    city: "المنصورة",
+    lat: 31.0364, lng: 31.3807,
+    capacity: "٨٠٠ ألف م³/يوم",
+    type: "ترشيح وكلورة",
+    desc: "تخدم محافظة الدقهلية وتعتمد على مياه نهر النيل فرع دمياط.",
+    color: "#00bfff"
+  },
+  {
+    name: "محطة معالجة مياه طنطا",
+    city: "طنطا",
+    lat: 30.7865, lng: 31.0004,
+    capacity: "٦٠٠ ألف م³/يوم",
+    type: "معالجة متكاملة",
+    desc: "تخدم محافظة الغربية وهي من أهم محطات الدلتا.",
+    color: "#00e5a0"
+  },
+  {
+    name: "محطة معالجة مياه شرم الشيخ",
+    city: "شرم الشيخ",
+    lat: 27.9158, lng: 34.3300,
+    capacity: "١٥٠ ألف م³/يوم",
+    type: "تحلية مياه البحر",
+    desc: "تعتمد كلياً على تحلية مياه البحر الأحمر لخدمة المدينة السياحية.",
+    color: "#ffb800"
+  },
+  {
+    name: "محطة معالجة مياه العين السخنة",
+    city: "السويس",
+    lat: 29.5500, lng: 32.3500,
+    capacity: "١٠٠ ألف م³/يوم",
+    type: "تحلية متقدمة",
+    desc: "محطة تحلية حديثة تخدم المنطقة الصناعية والسياحية في العين السخنة.",
+    color: "#ff6b35"
+  },
+  {
+    name: "محطة معالجة مياه الغردقة",
+    city: "الغردقة",
+    lat: 27.2579, lng: 33.8116,
+    capacity: "١٢٠ ألف م³/يوم",
+    type: "تحلية مياه البحر",
+    desc: "تخدم مدينة الغردقة السياحية وتعتمد على تحلية مياه البحر الأحمر.",
+    color: "#a855f7"
+  }
+];
+
+// Init map
+const map = L.map('map', {
+  center: [26.8206, 30.8025],
+  zoom: 6,
+  zoomControl: false
+});
+
+L.control.zoom({ position: 'bottomleft' }).addTo(map);
+
+// Dark tile layer
+L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+  attribution: '© OpenStreetMap © CARTO',
+  maxZoom: 19
+}).addTo(map);
+
+// Custom marker
+function createIcon(color) {
+  return L.divIcon({
+    className: '',
+    html: `<div style="
+      width: 16px; height: 16px;
+      background: ${color};
+      border: 3px solid white;
+      border-radius: 50%;
+      box-shadow: 0 0 12px ${color}, 0 0 24px ${color}40;
+      cursor: pointer;
+    "></div>`,
+    iconSize: [16, 16],
+    iconAnchor: [8, 8]
+  });
+}
+
+// Add markers
+stations.forEach((s, i) => {
+  const marker = L.marker([s.lat, s.lng], { icon: createIcon(s.color) }).addTo(map);
+
+  marker.on('click', () => {
+    document.getElementById('infoIcon').textContent = '🏭';
+    document.getElementById('infoName').textContent = s.name;
+    document.getElementById('infoCity').textContent = `📍 ${s.city}`;
+    document.getElementById('infoBody').innerHTML = `
+      <div class="info-row"><span class="info-label">الطاقة الإنتاجية</span><span class="info-val">${s.capacity}</span></div>
+      <div class="info-row"><span class="info-label">نوع المعالجة</span><span class="info-val">${s.type}</span></div>
+      <p class="info-desc">${s.desc}</p>
+    `;
+    document.getElementById('infoPanel').classList.add('active');
+  });
+});
+
+// Stations list
+const grid = document.getElementById('stationsList');
+stations.forEach((s, i) => {
+  const card = document.createElement('div');
+  card.className = 'station-card';
+  card.innerHTML = `
+    <div class="station-dot" style="background:${s.color}; box-shadow: 0 0 10px ${s.color}60"></div>
+    <div class="station-info">
+      <div class="station-name">${s.name}</div>
+      <div class="station-city">📍 ${s.city}</div>
+      <div class="station-meta">
+        <span class="station-tag">${s.type}</span>
+        <span class="station-cap">${s.capacity}</span>
+      </div>
+    </div>
+  `;
+  card.onclick = () => {
+    map.flyTo([s.lat, s.lng], 11, { duration: 1.5 });
+    document.getElementById('infoIcon').textContent = '🏭';
+    document.getElementById('infoName').textContent = s.name;
+    document.getElementById('infoCity').textContent = `📍 ${s.city}`;
+    document.getElementById('infoBody').innerHTML = `
+      <div class="info-row"><span class="info-label">الطاقة الإنتاجية</span><span class="info-val">${s.capacity}</span></div>
+      <div class="info-row"><span class="info-label">نوع المعالجة</span><span class="info-val">${s.type}</span></div>
+      <p class="info-desc">${s.desc}</p>
+    `;
+    document.getElementById('infoPanel').classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+  grid.appendChild(card);
+});
+</script>
+</body>
+</html>
