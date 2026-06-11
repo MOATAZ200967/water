@@ -1,4 +1,4 @@
-// أسئلة التحليل
+
 const questions = [
   {
     text: "ما هو مصدر المياه الرئيسي في منزلك؟",
@@ -42,21 +42,16 @@ let current = 0;
 let answers = [];
 let selected = null;
 
-// عرض السؤال الحالي
 function renderQuestion() {
   const q = questions[current];
-  
-  // تحديث أرقام الأسئلة
   document.getElementById('questionNum').textContent = `السؤال ${current + 1}`;
   document.getElementById('questionText').textContent = q.text;
 
-  // تحديث شريط التقدم
   const pct = (current / questions.length) * 100;
   document.getElementById('progressFill').style.width = pct + '%';
   document.getElementById('progressText').textContent = `السؤال ${current + 1} من ${questions.length}`;
   document.getElementById('progressPct').textContent = Math.round(pct) + '%';
 
-  // عرض الخيارات
   const container = document.getElementById('optionsContainer');
   container.innerHTML = '';
   selected = null;
@@ -70,14 +65,12 @@ function renderQuestion() {
     container.appendChild(btn);
   });
 
-  // إعادة تشغيل الأنيميشن
   const card = document.getElementById('quizCard');
   card.style.animation = 'none';
   card.offsetHeight;
   card.style.animation = 'slideUp 0.5s ease';
 }
 
-// اختيار إجابة
 function selectOption(index, btn) {
   document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
   btn.classList.add('selected');
@@ -85,7 +78,6 @@ function selectOption(index, btn) {
   document.getElementById('btnNext').classList.add('visible');
 }
 
-// الانتقال للسؤال التالي
 function nextQuestion() {
   if (selected === null) return;
   answers.push(selected);
@@ -98,7 +90,6 @@ function nextQuestion() {
   }
 }
 
-// عرض شاشة التحميل
 function showLoading() {
   document.getElementById('quizCard').style.display = 'none';
   document.getElementById('progressWrap').style.display = 'none';
@@ -107,23 +98,20 @@ function showLoading() {
   const steps = ['step1', 'step2', 'step3', 'step4'];
   steps.forEach((id, i) => {
     setTimeout(() => {
-      const stepEl = document.getElementById(id);
-      if (stepEl) stepEl.classList.add('done');
+      document.getElementById(id).classList.add('done');
     }, 700 * (i + 1));
   });
 
   setTimeout(showResult, 3800);
 }
 
-// حساب النتيجة بناءً على الإجابات
 function getResult() {
-  const src = answers[0];
-  const prob = answers[1];
-  const use = answers[2];
-  const budget = answers[3];
+  const src    = answers[0]; 
+  const prob   = answers[1]; 
+  const use    = answers[2]; 
+  const budget = answers[3]; 
 
-  // حالة 1: مصدر مياه خطير (بئر أو ترعة/نهر)
-  if (src === 2 || src === 1) {
+  if (src === 2 || src === 1) { 
     return {
       icon: "⚠️",
       title: "مياهك تحتاج معالجة قوية!",
@@ -135,7 +123,7 @@ function getResult() {
       tags: ["إزالة البكتيريا", "إزالة الأملاح", "إزالة المعادن الثقيلة", "مناسب للشرب"],
       meters: [
         { label: "نقاء المياه بعد الفلترة", val: 92, type: "high" },
-        { label: "خطورة المياه الحالية", val: 80, type: "low" },
+        { label: "خطورة المياه الحالية",    val: 80, type: "low"  },
         { label: "كفاءة الفلتر الموصى به", val: 95, type: "high" }
       ],
       steps: [
@@ -147,8 +135,7 @@ function getResult() {
     };
   }
 
-  // حالة 2: مشاكل محددة (لون أو طعم)
-  if (prob === 0 || prob === 2) {
+  if (prob === 0 || prob === 2) { 
     return {
       icon: "🔍",
       title: "مياهك تحتاج تنقية متخصصة",
@@ -159,9 +146,9 @@ function getResult() {
       filterDesc: "مزيج مثالي لإزالة العكارة والألوان والطعم الغريب. الكربون النشط يمتص الكلور والمواد العضوية، وفلتر UF يزيل الجسيمات الدقيقة.",
       tags: ["إزالة العكارة", "تحسين الطعم", "إزالة الكلور", "سعر معقول"],
       meters: [
-        { label: "تحسن الطعم والرائحة", val: 88, type: "high" },
-        { label: "إزالة الملوثات المرئية", val: 75, type: "high" },
-        { label: "خطورة المياه الحالية", val: 45, type: "mid" }
+        { label: "تحسن الطعم والرائحة",     val: 88, type: "high" },
+        { label: "إزالة الملوثات المرئية",  val: 75, type: "high" },
+        { label: "خطورة المياه الحالية",    val: 45, type: "mid"  }
       ],
       steps: [
         "🏷️ اختر فلتر كربون نشط ٥ مراحل",
@@ -172,8 +159,7 @@ function getResult() {
     };
   }
 
-  // حالة 3: رائحة أو كلور زائد
-  if (prob === 1) {
+  if (prob === 1) { 
     return {
       icon: "✨",
       title: "مياهك آمنة لكن محتاجة تحسين",
@@ -184,8 +170,8 @@ function getResult() {
       filterDesc: "الحل الاقتصادي المثالي لإزالة الكلور وتحسين الطعم والرائحة. بسيط التركيب وفعّال جداً لمياه شبكة الحكومة.",
       tags: ["إزالة الكلور", "تحسين الطعم", "اقتصادي", "سهل التركيب"],
       meters: [
-        { label: "جودة المياه الحالية", val: 68, type: "mid" },
-        { label: "تحسن بعد الفلتر", val: 90, type: "high" },
+        { label: "جودة المياه الحالية",  val: 68, type: "mid"  },
+        { label: "تحسن بعد الفلتر",      val: 90, type: "high" },
         { label: "خطورة المياه الحالية", val: 20, type: "high" }
       ],
       steps: [
@@ -197,7 +183,7 @@ function getResult() {
     };
   }
 
-  // حالة 4: المياه طبيعية (افتراضي)
+  
   return {
     icon: "💚",
     title: "مياهك في حالة جيدة!",
@@ -208,8 +194,8 @@ function getResult() {
     filterDesc: "مثالي للمياه التي تبدو نظيفة ولكن قد تحتوي على جراثيم أو ملوثات غير مرئية. يحافظ على المعادن المفيدة ويزيل البكتيريا.",
     tags: ["وقاية احترازية", "يحافظ على المعادن", "بدون كهرباء", "صديق للبيئة"],
     meters: [
-      { label: "جودة المياه الحالية", val: 78, type: "high" },
-      { label: "تحسن بعد الفلتر", val: 92, type: "high" },
+      { label: "جودة المياه الحالية",  val: 78, type: "high" },
+      { label: "تحسن بعد الفلتر",      val: 92, type: "high" },
       { label: "خطورة المياه الحالية", val: 15, type: "high" }
     ],
     steps: [
@@ -221,21 +207,19 @@ function getResult() {
   };
 }
 
-// عرض النتيجة النهائية
 function showResult() {
   document.getElementById('loadingScreen').classList.remove('active');
-  const r = getResult();
+  const r  = getResult();
   const rs = document.getElementById('resultScreen');
   rs.classList.add('active');
 
-  // تحديث البيانات في النتيجة
-  document.getElementById('resultIcon').textContent = r.icon;
-  document.getElementById('resultTitle').textContent = r.title;
+  document.getElementById('resultIcon').textContent    = r.icon;
+  document.getElementById('resultTitle').textContent   = r.title;
   document.getElementById('resultSubtitle').textContent = r.subtitle;
 
   const badge = document.getElementById('urgencyBadge');
   badge.textContent = r.urgencyText;
-  badge.className = `urgency ${r.urgency}`;
+  badge.className   = `urgency ${r.urgency}`;
 
   document.getElementById('filterName').textContent = r.filterName;
   document.getElementById('filterDesc').textContent = r.filterDesc;
@@ -243,7 +227,6 @@ function showResult() {
   const tags = document.getElementById('filterTags');
   tags.innerHTML = r.tags.map(t => `<span class="tag">${t}</span>`).join('');
 
-  // عرض مقاييس الجودة
   const meters = document.getElementById('metersContainer');
   meters.innerHTML = r.meters.map(m => `
     <div class="quality-meter">
@@ -257,7 +240,7 @@ function showResult() {
     </div>
   `).join('');
 
-  // تشغيل أنيميشن المقاييس
+  
   setTimeout(() => {
     document.querySelectorAll('.meter-fill').forEach(el => {
       const target = parseInt(el.dataset.val);
@@ -265,46 +248,29 @@ function showResult() {
 
       const pctEl = el.closest('.quality-meter').querySelector('.pct-label');
       let count = 0;
-      const interval = Math.max(10, 1500 / target);
+      const interval = 1500 / target;
       const counter = setInterval(() => {
         count++;
-        pctEl.textContent = Math.min(count, target) + '%';
+        pctEl.textContent = count + '%';
         if (count >= target) clearInterval(counter);
       }, interval);
     });
   }, 300);
 
-  // عرض الخطوات
   const steps = document.getElementById('stepsContainer');
-  steps.innerHTML = r.steps.map(s => `<div style="margin-bottom: 8px;">${s}</div>`).join('');
+  steps.innerHTML = r.steps.map(s => `<div>${s}</div>`).join('');
 
   document.getElementById('progressWrap').style.display = 'none';
 }
 
-// إعادة تشغيل الاختبار
 function restart() {
-  current = 0;
-  answers = [];
+  current  = 0;
+  answers  = [];
   selected = null;
   document.getElementById('resultScreen').classList.remove('active');
-  document.getElementById('quizCard').style.display = 'block';
+  document.getElementById('quizCard').style.display    = 'block';
   document.getElementById('progressWrap').style.display = 'block';
   renderQuestion();
 }
 
-// بدء الاختبار عند تحميل الصفحة
-document.addEventListener('DOMContentLoaded', function() {
-  renderQuestion();
-  
-  // إضافة مستمع لزر التالي
-  const nextBtn = document.getElementById('btnNext');
-  if (nextBtn) {
-    nextBtn.onclick = nextQuestion;
-  }
-  
-  // إضافة مستمع لزر إعادة التشغيل
-  const restartBtn = document.querySelector('.btn-restart');
-  if (restartBtn) {
-    restartBtn.onclick = restart;
-  }
-});
+renderQuestion();
